@@ -1,9 +1,12 @@
+from typing import List
+
 import posts as posts
 import pytest
 
 from blue_post.dao import post
 from blue_post.dao.post import Post
 from blue_post.dao.post_dao import PostDAO
+
 
 def check_fields(post):
     fields = ["poster_name", "poster_avatar", "pic", "content", "views_count", "likes_count", "pk"]
@@ -16,7 +19,6 @@ class TestPostsDAO:
     def post_dao(self):
         post_dao_instance = PostDAO("./blue_post/tests/post_mock.json")
         return post_dao_instance
-
 
     def test_get_all_types(self, post_dao):
         posts = post_dao.get_all()
@@ -33,7 +35,7 @@ class TestPostsDAO:
     def test_get_all_correct_ids(self, post_dao):
         posts = post_dao.get_all()
         correct_pks = {1, 2, 3}
-        pks = set([post.pk for pot in posts])
+        pks = set([post.pk for post in posts])
         assert pks == correct_pks, "Не совпадают полученные id"
 
     def test_get_by_pk_types(self, post_dao):

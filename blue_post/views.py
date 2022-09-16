@@ -11,11 +11,13 @@ blue_post = Blueprint("blue_post", __name__, template_folder="templates")
 post_dao = PostDAO(DATA_PATH_POSTS)
 comments_dao = CommentDAO(DATA_PATH_COMMENTS)
 
+
 @blue_post.route("/")
 def page_posts_index():
     """Страничка всех постов"""
     all_posts = post_dao.get_all()
     return render_template("posts_index.html", posts=all_posts)
+
 
 @blue_post.route("/posts/<int:pk>/")
 def page_posts_single(pk: int):
@@ -28,6 +30,7 @@ def page_posts_single(pk: int):
 
     return render_template("posts_single.html", post=post, comments=comments, comments_len=len(comments))
 
+
 @blue_post.route("/users/<user_name>")
 def page_posts_by_user(user_name: str):
     """Возвращает посты пользователя"""
@@ -35,6 +38,7 @@ def page_posts_by_user(user_name: str):
     if posts == []:
         abort(404, "Такого пользователя не существует")
     return render_template("posts_user-feed.html", posts=posts, user_name=user_name)
+
 
 @blue_post.route("/search/")
 def page_posts_search():
